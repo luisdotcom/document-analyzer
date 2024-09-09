@@ -19,3 +19,9 @@ Document Analyzer is a project developed to extract text and analyze pdf files u
    <img alt="CSS3" src="https://img.shields.io/badge/CSS3-1572B6?style=for-the-badge&logo=css3&logoColor=white"> 
    <img alt="Bootstrap" src="https://img.shields.io/badge/Bootstrap-563D7C?style=for-the-badge&logo=bootstrap&logoColor=white"> 
  </div>
+
+##### Examples
+
+![image](https://github.com/user-attachments/assets/03c70f25-fb2b-41a3-b3c8-c9c7e1341ffd)
+
+![image](https://github.com/user-attachments/assets/885accb7-f6f2-4029-8230-943ce305806e)
