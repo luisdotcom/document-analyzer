@@ -8,13 +8,13 @@ builder.Services.AddSwaggerGen();
 
 var configuration = builder.Configuration;
 
-string[] documentAISettings = ["ProjectId", "LocationId", "MimeType", "OCR", "INVOICE", "EXPENSE", "CUSTOM"];
+string[] documentAISettings = ["ProjectId", "LocationId", "CredentialsPath", "MimeType", "OCR", "INVOICE", "EXPENSE", "CUSTOM"];
 foreach (string setting in documentAISettings)
 {
     typeof(DocumentAISettings).GetProperty(setting).SetValue(null, configuration.GetValue<string>($"DocumentAISettings:{setting}"));
 }
 
-string[] vertexAISettings = ["ProjectId", "LocationId", "Publisher", "Model", "Bucket", "CredentialsPath"];
+string[] vertexAISettings = ["ProjectId", "LocationId", "Publisher", "Model", "MimeType","Bucket", "CredentialsPath"];
 foreach (string setting in vertexAISettings)
 {
     typeof(VertexAISettings).GetProperty(setting).SetValue(null, configuration.GetValue<string>($"VertexAISettings:{setting}"));

@@ -10,13 +10,13 @@ namespace document_analyzer_api.Utils
         {
             DocumentProcessorServiceClient client = new DocumentProcessorServiceClientBuilder()
             {
-                Endpoint = $"{DocumentAISettings.LocationId}-documentai.googleapis.com"
+                Endpoint = $"{DocumentAISettings.LocationId}-documentai.googleapis.com",
+                CredentialsPath = DocumentAISettings.CredentialsPath
             }.Build();
 
-            using Stream fileStream = documentAIRequest.File.OpenReadStream();
             RawDocument rawDocument = new()
             {
-                Content = ByteString.FromStream(fileStream),
+                Content = ByteString.FromBase64(documentAIRequest.Base64String),
                 MimeType = DocumentAISettings.MimeType
             };
 

@@ -3,6 +3,6 @@
     public class DocumentAIRequest
     {
         public string ModelName { get; set; }
-        public IFormFile File { get; set; }
+        public string Base64String { get; set; }
     }
 }

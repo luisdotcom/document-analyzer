@@ -4,6 +4,7 @@
     {
         public static string ProjectId { get; set; } = "";
         public static string LocationId { get; set; } = "";
+        public static string CredentialsPath { get; set; } = "";
         public static string MimeType { get; set; } = "";
         public static string OCR { get; set; } = "";
         public static string INVOICE { get; set; } = "";

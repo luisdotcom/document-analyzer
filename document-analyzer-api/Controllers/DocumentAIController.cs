@@ -2,7 +2,6 @@
 using document_analyzer_api.Utils;
 using Google.Cloud.DocumentAI.V1;
 using Microsoft.AspNetCore.Mvc;
-using Newtonsoft.Json;
 
 namespace document_analyzer_api.Controllers
 {
@@ -16,18 +15,10 @@ namespace document_analyzer_api.Controllers
         /// <param name="documentAIRequest">Type: DTO. Description: DTO containing the model name and pdf file.</param>
         /// <returns></returns>
         [HttpPost("ReadDocument")]
-        public IActionResult ReadDocument(DocumentAIRequest documentAIRequest)
+        public IActionResult ReadDocument([FromBody] DocumentAIRequest documentAIRequest)
         {
-            if (documentAIRequest.File.FileName.ToLower().EndsWith(".pdf"))
-            {
-                Document document = DocumentAI.ReadDocument(documentAIRequest);
-                string json = JsonConvert.SerializeObject(document);
-                return Ok(json);
-            }
-            else
-            {
-                return BadRequest("Tipo de documento no válido.");
-            }
+            Document document = DocumentAI.ReadDocument(documentAIRequest);
+            return Ok(document.Text);
         }
 
         /// <summary>
@@ -36,18 +27,10 @@ namespace document_analyzer_api.Controllers
         /// <param name="vertexAIRequest">Type: DTO. Description: DTO containing the prompt and pdf file.</param>
         /// <returns></returns>
         [HttpPost("AnalyzeDocument")]
-        public async Task<IActionResult> AnalyzeDocument(VertexAIRequest vertexAIRequest)
+        public async Task<IActionResult> AnalyzeDocument([FromBody] VertexAIRequest vertexAIRequest)
         {
-            if (vertexAIRequest.File.FileName.ToLower().EndsWith(".pdf"))
-            {
-                string result = await VertexAI.AnalyzeDocument(vertexAIRequest);
-                return Ok(result);
-            }
-            else
-            {
-                return BadRequest("Tipo de documento no válido.");
-            }
-
+            string result = await VertexAI.AnalyzeDocument(vertexAIRequest);
+            return Ok(result);
         }
     }
 }

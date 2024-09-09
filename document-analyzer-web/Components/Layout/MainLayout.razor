@@ -1,0 +1,19 @@
+﻿@inherits LayoutComponentBase
+@inject NavigationManager Navigation
+@inject ISnackbar Snackbar
+
+<MudThemeProvider @rendermode="InteractiveServer" />
+<MudPopoverProvider @rendermode="InteractiveServer" />
+<MudDialogProvider @rendermode="InteractiveServer" />
+<MudSnackbarProvider @rendermode="InteractiveServer" />
+
+<MudLayout>
+    <MudAppBar Elevation="1" Dense="true">
+        <MudText Typo="Typo.h5" Class="ml-3">Document Analyzer</MudText>
+        <MudSpacer />
+        <MudIconButton Icon="@Icons.Custom.Brands.GitHub" Color="Color.Inherit" OnClick="GoToRepository" />
+    </MudAppBar>
+    <MudMainContent Class="pt-16 px-16">
+            @Body
+    </MudMainContent>
+</MudLayout>

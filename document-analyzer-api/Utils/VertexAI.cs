@@ -8,7 +8,7 @@ namespace document_analyzer_api.Utils
     {
         public static async Task<string> AnalyzeDocument(VertexAIRequest vertexAIRequest)
         {
-            bool uploaded = await UploadFile(vertexAIRequest.File);
+            bool uploaded = await UploadFile(vertexAIRequest.Base64String);
             if (uploaded)
             {
                 PredictionServiceClient predictionServiceClient = new PredictionServiceClientBuilder
@@ -27,7 +27,7 @@ namespace document_analyzer_api.Utils
                             Parts =
                             {
                                 new Part { Text = vertexAIRequest.Prompt },
-                                new Part { FileData = new() { MimeType = vertexAIRequest.File.ContentType, FileUri = "gs://document-analyzer/Document.pdf"} }
+                                new Part { FileData = new() { MimeType =  VertexAISettings.MimeType, FileUri = "gs://document-analyzer/Document.pdf"} }
                             }
                         }
                     }
@@ -42,11 +42,12 @@ namespace document_analyzer_api.Utils
                 return "No se pudo subir el documento.";
             }
         }
-        private static async Task<bool> UploadFile(IFormFile file)
+        private static async Task<bool> UploadFile(string Base64String)
         {
             var storage = StorageClient.Create();
-            using var fileStream = file.OpenReadStream();
-            await storage.UploadObjectAsync(VertexAISettings.Bucket, "Document.pdf", file.ContentType, fileStream);
+            byte[] bytes = Convert.FromBase64String(Base64String);
+            using var fileStream = new MemoryStream(bytes);
+            await storage.UploadObjectAsync(VertexAISettings.Bucket, "Document.pdf", VertexAISettings.MimeType, fileStream);
 
             var obj = await storage.GetObjectAsync(VertexAISettings.Bucket, "Document.pdf");
             return obj != null;
